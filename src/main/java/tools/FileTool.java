@@ -20,16 +20,24 @@ public class FileTool {
 
             for(String path : result){
                 File file = new File(path);
-                String extension = file.getName().split("\\.")[1];
-                File newFile = new File(dir+"/"+prefix+"."+extension);
-                String oldName = file.getAbsolutePath();
-                file.renameTo(newFile);
-                System.out.println(oldName+" => "+newFile.getAbsolutePath());
+                if (nameNotContains(file, "java") && nameNotContains(file, "py")
+                        && nameNotContains(file, "jar") && nameNotContains(file, "h5")) {
+                    String extension = file.getName().split("\\.")[1];
+                    File newFile = new File(dir + "/" + prefix + "." + extension);
+                    String oldName = file.getAbsolutePath();
+                    file.renameTo(newFile);
+                    System.out.println(oldName + " => " + newFile.getAbsolutePath());
+                    prefix++;
+                }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private static boolean nameNotContains(File f, String text) {
+        return !f.getName().contains(text);
     }
 }
